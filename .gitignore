@@ -1,4 +1,21 @@
-# Byte-compiled / optimized / DLL files
+
+kubernetes/secrets.yaml
+
+
+venv/
+.venv/
+env/
+.env
+
+
+.vscode/
+.idea/
+*.swp
+
+
+*.log
+*.pyc
 __pycache__/
-*.py[cod]
-*$py.class
+
+
+docker-compose.override.yml
