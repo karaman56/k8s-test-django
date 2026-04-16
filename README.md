@@ -75,3 +75,31 @@ $ docker compose build web
 `ALLOWED_HOSTS` -- настройка Django со списком разрешённых адресов. Если запрос прилетит на другой адрес, то сайт ответит ошибкой 400. Можно перечислить несколько адресов через запятую, например `127.0.0.1,192.168.0.1,site.test`. [Документация Django](https://docs.djangoproject.com/en/3.2/ref/settings/#allowed-hosts).
 
 `DATABASE_URL` -- адрес для подключения к базе данных PostgreSQL. Другие СУБД сайт не поддерживает. [Формат записи](https://github.com/jacobian/dj-database-url#url-schema).
+
+
+## 🔐 Настройка секретов для Kubernetes
+
+Перед развёртыванием приложения в кластере необходимо создать объект `Secret` с конфиденциальными данными.
+
+1. **Создайте файл `kubernetes/secrets.yaml`** на основе примера ниже, заменив значения на свои, закодированные в base64.
+2. **Для кодирования используйте команды**:
+   ```bash
+   echo -n 'ваш_секретный_ключ' | base64 | tr -d '\n'
+   echo -n 'postgres://пользователь:пароль@ip:порт/база' | base64 | tr -d '\n'
+   ```
+3. **Примените секрет** 
+   ```bash
+   kubectl apply -f kubernetes/secrets.yaml
+   ```
+4. **Разверните приложение**
+    ```bash
+   kubectl apply -f kubernetes/deployment.yaml
+   kubectl apply -f kubernetes/service.yaml
+   ```
+   
+5. **Получите доступ к сайту**
+    ```bash
+   minikube service django-service
+   ```
+   
+### ⚠️ Важно: Никогда не добавляйте secrets.yaml в Git. Добавьте эту строку в .gitignore.

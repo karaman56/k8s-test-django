@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: django-deployment
+  labels:
+    app: django
+    environment: production
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: django
+  template:
+    metadata:
+      labels:
+        app: django
+        environment: production
+    spec:
+      containers:
+      - name: django
+        image: django-k8s:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 80
+        env:
+        - name: DEBUG
+          value: "FALSE"
+        - name: ALLOWED_HOSTS
+          value: "*"
+        envFrom:
+        - secretRef:
+            name: django-secrets
