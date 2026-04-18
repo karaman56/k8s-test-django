@@ -103,3 +103,23 @@ $ docker compose build web
    ```
    
 ### ⚠️ Важно: Никогда не добавляйте secrets.yaml в Git. Добавьте эту строку в .gitignore.
+
+
+## 🌐 Доступ через Ingress
+
+Для доступа к сайту на стандартном порту 80 используется Ingress.
+
+1. **Включите Ingress Controller в Minikube:**
+   ```bash
+   minikube addons enable ingress
+   ```
+2. **Убедитесь, что сервис Django имеет тип ClusterIP (см. kubernetes/service.yaml)**
+3. **Создайте Ingress-правило**
+   ```bash
+   kubectl apply -f kubernetes/ingress.yaml
+   ```                
+4. ***Добавьте в файл /etc/hosts запись (заменив IP на адрес вашей Minikube)***
+   ```bash
+   $(minikube ip) star-burger.test
+   ```
+5. ***Откройте сайт в браузере: http://star-burger.test***
