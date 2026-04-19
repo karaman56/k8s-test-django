@@ -1,0 +1,11 @@
+global:
+  postgresql:
+    auth:
+      username: "test_k8s"
+      password: "OwOtBep9Frut"
+      database: "test_k8s"
+      postgresPassword: "OwOtBep9Frut"
+primary:
+  persistence:
+    enabled: true
+    size: 1Gi
