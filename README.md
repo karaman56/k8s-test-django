@@ -123,3 +123,17 @@ $ docker compose build web
    $(minikube ip) star-burger.test
    ```
 5. ***Откройте сайт в браузере: http://star-burger.test***
+
+
+## 🤖 Автоматическая очистка сессий
+
+Для автоматического удаления устаревших сессий в проекте используется `CronJob`.
+
+1. **Примените манифест CronJob**:
+   ```bash
+   kubectl apply -f kubernetes/cronjob-clearsessions.yaml
+   ```
+2. ***Проверьте, что CronJob создан***
+   ```bash
+   kubectl get cronjob
+   ```
