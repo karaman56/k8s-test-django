@@ -3,28 +3,22 @@ kind: CronJob
 metadata:
   name: django-clearsessions-cronjob
 spec:
-
   schedule: "0 3 * * *"
-
   concurrencyPolicy: Forbid
-
+  startingDeadlineSeconds: 3600
   successfulJobsHistoryLimit: 3
-
   failedJobsHistoryLimit: 1
   jobTemplate:
     spec:
-
+      ttlSecondsAfterFinished: 86400
       template:
         spec:
-
           restartPolicy: Never
           containers:
           - name: django-clearsessions
             image: django-k8s:latest
             imagePullPolicy: IfNotPresent
-
             command: ["python", "manage.py", "clearsessions"]
-
             envFrom:
             - secretRef:
                 name: django-secrets

@@ -1,0 +1,22 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: django-migrate-job
+spec:
+
+  backoffLimit: 0
+
+  template:
+    spec:
+
+      restartPolicy: Never
+      containers:
+      - name: django-migrate
+        image: django-k8s:latest
+        imagePullPolicy: IfNotPresent
+
+        command: ["python", "manage.py", "migrate"]
+
+        envFrom:
+        - secretRef:
+            name: django-secrets
