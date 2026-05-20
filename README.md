@@ -141,5 +141,19 @@ $ docker compose build web
 - `startingDeadlineSeconds: 3600` — если кластер был выключен, задача запустится в течение часа после включения; если опоздала больше — пропускается, чтобы избежать ошибок.
 - `ttlSecondsAfterFinished: 86400` — успешно завершённые Job'ы удаляются из кластера через сутки, не засоряя историю.
 
+## 🚀 Деплой тестового веб-сервера в YC-Sirius Dev
 
+В окружении `yc-sirius-dev` мы разворачиваем простой Nginx с Service типа LoadBalancer.
+
+1. **Перейди в корень репозитория.**
+2. **Примени манифесты для пода и сервиса:**
+   ```bash
+   kubectl apply -f deploy/yc-sirius/dev/nginx-pod.yaml
+   kubectl apply -f deploy/yc-sirius/dev/nginx-service.yaml
+   ```
+3. Дождись внешнего IP:
+   ```
+   kubectl get svc nginx -w
+   ```
+4. Открой в браузере домен вида http://<внешний_IP>.nip.io – сработает редирект на HTTPS (сертификат самоподписанный, нужно принять предупреждение).
 
