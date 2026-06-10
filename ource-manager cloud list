@@ -1,0 +1,23 @@
+Set value for the specified configuration property
+
+Usage:
+  yc config set <PROPERTY> <VALUE> [Global Flags...]
+
+Examples:
+  yc config set cloud-id YOUR_CLOUD_ID
+  yc config set compute-default-zone YOUR_DEFAULT_ZONE
+  yc config set endpoint api.cloud.yandex.net:443
+  yc config set folder-id YOUR_FOLDER_ID
+  yc config set folder-name YOUR_FOLDER_NAME
+  yc config set format json
+  yc config set instance-service-account true
+  yc config set organization-id YOUR_ORGANIZATION_ID
+  yc config set service-account-key ./path/to/key/file.json
+  yc config set token YOUR_TOKEN
+  yc config set storage-endpoint YOUR_STORAGE_ENDPOINT
+  yc config set s3.max-queue-size 1000
+  yc config set s3.max-concurrent-requests 10
+  yc config set s3.multipart-threshold 8MB
+  yc config set s3.multipart-chunksize 8MB
+
+Use "yc help [command]" for more information about a command and global flags.
