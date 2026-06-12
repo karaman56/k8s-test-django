@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: main-nginx-config
+  namespace: edu-edu-karaman-utegenov
+data:
+  nginx.conf: |
+    user nginx;
+    worker_processes  2;
+    events {
+      worker_connections  10240;
+    }
+    http {
+      server {
+        listen       80;
+        server_name  localhost;
+        location / {
+          default_type text/html;
+          return 200 '<html><head><meta charset="UTF-8"></head><body><h1>Привет, это тестовый веб-сервер Караман!</h1></body></html>';
+        }
+      }
+    }
