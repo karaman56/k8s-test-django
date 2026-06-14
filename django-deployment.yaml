@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: django
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: django
+  template:
+    metadata:
+      labels:
+        app: django
+    spec:
+      containers:
+      - name: django
+        image: karaman56/k8s-test-django:8162505
+        ports:
+        - containerPort: 8000
+        envFrom:
+        - secretRef:
+            name: django-env
+        env:
+        - name: DATABASE_URL
+          value: "postgres://$(DB_USER):$(DB_PASSWORD)@$(DB_HOST):$(DB_PORT)/$(DB_NAME)?sslmode=$(DB_SSLMODE)"
+        volumeMounts:
+        - name: postgres-ssl
+          mountPath: /etc/ssl/certs/root.crt
+          subPath: root.crt
+      volumes:
+      - name: postgres-ssl
+        secret:
+          secretName: postgres-ssl-cert

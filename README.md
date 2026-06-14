@@ -157,3 +157,36 @@ $ docker compose build web
    ```
 4. Открой в браузере домен вида http://<внешний_IP>.nip.io – сработает редирект на HTTPS (сертификат самоподписанный, нужно принять предупреждение).
 
+# Деплой Django-приложения в кластер Kubernetes
+
+## Предварительные требования
+- Доступ к кластеру Kubernetes (kubectl)
+- Docker с авторизацией в Docker Hub
+
+## Сборка и публикация Docker-образа
+
+```bash
+docker build --build-arg SECRET_KEY=dummy -t <___> .
+docker push <___>
+```
+
+### Развёртывание в кластере
+### Создайте секрет с переменными окружения для Django (при необходимости).
+
+### Примените Deployment и Service:
+```
+kubectl apply -f django-deployment.yaml -n <____>
+kubectl apply -f django-service.yaml -n <____>
+```
+
+### Выполните миграции:
+```
+kubectl exec -it -n <___> <pod-name> -- python manage.py migrate
+```
+
+### Создайте суперпользователя:
+```
+kubectl exec -it -n <___> <pod-name> -- python manage.py createsuperuser
+```
+
+### Проверьте доступ через port-forward или по домену.
