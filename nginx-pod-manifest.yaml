@@ -1,0 +1,144 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  annotations:
+    kubectl.kubernetes.io/restartedAt: "2026-06-12T15:39:45+05:00"
+  creationTimestamp: "2026-06-12T10:39:45Z"
+  generateName: main-nginx-748dfc7fd4-
+  generation: 1
+  labels:
+    app: main-nginx
+    pod-template-hash: 748dfc7fd4
+  name: main-nginx-748dfc7fd4-4wtpf
+  namespace: edu-edu-karaman-utegenov
+  ownerReferences:
+  - apiVersion: apps/v1
+    blockOwnerDeletion: true
+    controller: true
+    kind: ReplicaSet
+    name: main-nginx-748dfc7fd4
+    uid: 19fd04f9-9e3b-4452-82f3-930f0d1aa71b
+  resourceVersion: "264850855"
+  uid: 0b77333e-b4ad-4421-937d-ce739783c25e
+spec:
+  automountServiceAccountToken: true
+  containers:
+  - image: nginx:1.16.1
+    imagePullPolicy: IfNotPresent
+    name: nginx
+    ports:
+    - containerPort: 80
+      protocol: TCP
+    resources: {}
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /etc/nginx/nginx.conf
+      mountPropagation: None
+      name: nginx-config
+      readOnly: true
+      subPath: nginx.conf
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: kube-api-access-6wc79
+      readOnly: true
+  dnsPolicy: ClusterFirst
+  enableServiceLinks: true
+  nodeName: cl1r617gkfjl8r7g4qa0-uhyt
+  preemptionPolicy: PreemptLowerPriority
+  priority: 0
+  restartPolicy: Always
+  schedulerName: default-scheduler
+  securityContext: {}
+  serviceAccount: default
+  serviceAccountName: default
+  shareProcessNamespace: false
+  terminationGracePeriodSeconds: 30
+  tolerations:
+  - effect: NoExecute
+    key: node.kubernetes.io/not-ready
+    operator: Exists
+    tolerationSeconds: 300
+  - effect: NoExecute
+    key: node.kubernetes.io/unreachable
+    operator: Exists
+    tolerationSeconds: 300
+  volumes:
+  - configMap:
+      defaultMode: 420
+      items:
+      - key: nginx.conf
+        path: nginx.conf
+      name: main-nginx-config
+      optional: false
+    name: nginx-config
+  - name: kube-api-access-6wc79
+    projected:
+      defaultMode: 420
+      sources:
+      - serviceAccountToken:
+          expirationSeconds: 3607
+          path: token
+      - configMap:
+          items:
+          - key: ca.crt
+            path: ca.crt
+          name: kube-root-ca.crt
+      - downwardAPI:
+          items:
+          - fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+            path: namespace
+status:
+  conditions:
+  - lastProbeTime: null
+    lastTransitionTime: "2026-06-12T10:39:46Z"
+    status: "True"
+    type: PodReadyToStartContainers
+  - lastProbeTime: null
+    lastTransitionTime: "2026-06-12T10:39:45Z"
+    status: "True"
+    type: Initialized
+  - lastProbeTime: null
+    lastTransitionTime: "2026-06-12T10:39:46Z"
+    status: "True"
+    type: Ready
+  - lastProbeTime: null
+    lastTransitionTime: "2026-06-12T10:39:46Z"
+    status: "True"
+    type: ContainersReady
+  - lastProbeTime: null
+    lastTransitionTime: "2026-06-12T10:39:45Z"
+    status: "True"
+    type: PodScheduled
+  containerStatuses:
+  - containerID: containerd://0e58c0737a80f6705fcdaec9600a7e91538888f31c40808b9b79d3c61a73e407
+    image: docker.io/library/nginx:1.16.1
+    imageID: docker.io/library/nginx@sha256:d20aa6d1cae56fd17cd458f4807e0de462caf2336f0b70b5eeb69fcaaf30dd9c
+    lastState: {}
+    name: nginx
+    ready: true
+    resources: {}
+    restartCount: 0
+    started: true
+    state:
+      running:
+        startedAt: "2026-06-12T10:39:46Z"
+    volumeMounts:
+    - mountPath: /etc/nginx/nginx.conf
+      name: nginx-config
+      readOnly: true
+      recursiveReadOnly: Disabled
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: kube-api-access-6wc79
+      readOnly: true
+      recursiveReadOnly: Disabled
+  hostIP: 10.103.0.18
+  hostIPs:
+  - ip: 10.103.0.18
+  phase: Running
+  podIP: 10.112.136.173
+  podIPs:
+  - ip: 10.112.136.173
+  qosClass: BestEffort
+  startTime: "2026-06-12T10:39:45Z"

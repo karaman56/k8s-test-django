@@ -120,9 +120,9 @@ $ docker compose build web
    ```                
 4. ***Добавьте в файл /etc/hosts запись (заменив IP на адрес вашей Minikube)***
    ```bash
-   $(minikube ip) star-burger.test
-   ```
-5. ***Откройте сайт в браузере: http://star-burger.test***
+
+  
+
 
 
 ## 🤖 Автоматическая очистка сессий
@@ -190,3 +190,58 @@ kubectl exec -it -n <___> <pod-name> -- python manage.py createsuperuser
 ```
 
 ### Проверьте доступ через port-forward или по домену.
+
+
+## 🚀 Деплой Django-приложения в Yandex Cloud (кластер sirius-dev)
+
+Проект развёрнут в кластере `sirius-dev` (Yandex Managed Service for Kubernetes) в пространстве имён `edu-edu-karaman-utegenov`.
+
+### 🌐 Доступ к сайту
+
+**Работающий сайт доступен по адресу:**  
+👉 [http://158.160.195.224/admin/](http://158.160.195.224/admin/)
+
+> Админка работает, суперпользователь создан. В dev-окружении статика может временно не подгружаться, но это не влияет на функциональность — вход в админку и работа с данными доступны.
+
+---
+
+### 🔧 Используемые компоненты
+
+| Компонент | Название/Значение |
+|-----------|-------------------|
+| Кластер Kubernetes | `sirius-dev` |
+| Пространство имён | `edu-edu-karaman-utegenov` |
+| База данных | Managed PostgreSQL (внешняя, с SSL) |
+| Публичный IP (Ingress) | `158.160.195.224` |
+| Доменное имя (временное) | `django-karaman.yc-sirius-dev.pelid.team` (не резолвится, используется IP) |
+
+---
+
+### 📦 Сборка и загрузка образа
+
+Образ собран локально с помощью Dockerfile и загружен в Yandex Container Registry (в процессе работы над заданием были ограничения на запись, но образ сохранён локально).
+
+Для повторной сборки используйте:
+
+```bash
+docker build -t k8s-test-django:latest .
+```
+
+### Примените Deployment и Service
+```
+kubectl apply -f deployment-fixed.yaml -n -----
+kubectl apply -f django-service.yaml -n -------
+kubectl apply -f django-nodeport-svc.yaml -n ------
+```
+
+### Применить Ingress
+```
+kubectl apply -f alb-ingress-final.yaml -n ------
+```
+
+### Выполнить миграции и создать суперпользователя:
+```
+kubectl exec deployment/django-deployment -n edu-edu- _______ -- python manage.py migrate
+kubectl exec -it deployment/django-deployment -n ______ -- python manage.py createsuperuser
+```
+

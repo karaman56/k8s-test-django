@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: psql-client-mount                 
+  namespace: edu-edu-karaman-utegenov     
+spec:
+  containers:
+  - name: psql-client                     
+    image: postgres:15                    
+    args: ["sleep", "infinity"]           
+    volumeMounts:
+    - name: postgres-ssl-cert-volume      
+      mountPath: /root/.postgresql        
+  volumes:
+  - name: postgres-ssl-cert-volume        
+    secret:
+      secretName: postgres-ssl-cert       

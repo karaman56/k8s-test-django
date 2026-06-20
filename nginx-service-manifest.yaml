@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: "2026-05-05T13:35:55Z"
+  name: main-nginx
+  namespace: edu-edu-karaman-utegenov
+  resourceVersion: "266057796"
+  uid: 77c6009a-8b31-40ad-86c1-7cbfdd5e7d69
+spec:
+  clusterIP: 10.96.252.60
+  clusterIPs:
+  - 10.96.252.60
+  externalTrafficPolicy: Cluster
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+  - nodePort: 31207
+    port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: main-nginx
+  sessionAffinity: None
+  type: NodePort
+status:
+  loadBalancer: {}
